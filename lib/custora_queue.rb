@@ -1,6 +1,6 @@
 require_relative "custora_queue/common"
 require_relative "custora_queue/version"
-require_relative "custora_queue/main2"
+require_relative "custora_queue/main"
 require_relative "custora_queue/models/game"
 require_relative "custora_queue/models/machine"
 require_relative "custora_queue/models/turn"

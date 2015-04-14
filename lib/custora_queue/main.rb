@@ -1,88 +1,45 @@
-require 'rubygems'
-require 'bundler/setup'
+=begin
+  This is the main module.
+=end
+module CustoraQueue
 
-require 'json'
-require 'rest-client'
+=begin
+  The class to deal with game processing.
+=end
+  class GameReactor
 
-host = 'http://job-queue-dev.elasticbeanstalk.com'
+    attr_accessor :game, :machine
 
-#
-# Create a new game
-#
-game_json = RestClient.post(
-  "#{host}/games",
-   { long: false }
-).body
-game = JSON.parse(game_json)
+=begin
+  This function is used to initialize the game processing.
+=end
+    def initialize
+      @game = Game.new
+      @machine = Machine.new(game)
+    end
 
-#
-# Create a new machine
-#
-machine_json = RestClient.post(
-  "#{host}/games/#{game['id']}/machines",
-  {}
-).body
-machine = JSON.parse(machine_json)
+=begin
+  This function is used to run the gane reactor.
+=end
+    def run
+      @turn = Turn.new(game)
+      while @turn.instance_variable_get("@status") != 'completed'
 
-#
-# Pull the data for the next turn. This will include the jobs to be
-# scheduled as well as the current status of the game.
-#
-turn_json = RestClient.get(
-  "#{host}/games/#{game['id']}/next_turn"
-).body
-turn = JSON.parse(turn_json)
+        jobs_found = @turn.instance_variable_get("@jobs").size
+        print_turn_text(jobs_found)
 
-status = turn['status']
+       if (@turn.instance_variable_get("@current_turn") % 25) == 0
+        @machine.destroy
+       end
+        
+        @turn.assign_jobs(machine)    
+        @turn.next_turn
+      end
 
-jobs_found = turn['jobs'].count
+      @game = @game.reload
+      print_game_text(@game)
+    end   
 
-#
-# When the status changes to completed the game is over
-#
-while (status != 'completed')
-  puts "On turn #{turn['current_turn']}, got #{turn['jobs'].count} jobs, having completed #{turn['jobs_completed']} of #{jobs_found} with #{turn['jobs_running']} jobs running, #{turn['jobs_queued']} jobs queued, and #{turn['machines_running']} machines running"
-
-  #
-  # This is purely for showing off how deleting machines works
-  #
-  if (turn['current_turn'] % 25) == 0
-    RestClient.delete("#{host}/games/#{game['id']}/machines/#{machine['id']}")
-    machine_json = RestClient.post("#{host}/games/#{game['id']}/machines", {}).body
-    machine = JSON.parse(machine_json)
   end
 
-  #
-  # Get the ids for all of the jobs in this batch
-  #
-  job_ids = turn['jobs'].map { |job| job['id'] }
-
-  #
-  # If we got any jobs, assign them all to the machine
-  #
-  if job_ids.any?
-    RestClient.post(
-      "#{host}/games/#{game['id']}/machines/#{machine['id']}/job_assignments",
-      job_ids: JSON.dump(job_ids)
-    ).body
-  end
-
-  #
-  # And then pull the data for the next turn
-  #
-  turn_json = RestClient.get("#{host}/games/#{game['id']}/next_turn").body
-  turn = JSON.parse(turn_json)
-
-  jobs_found += turn['jobs'].count
-
-  status = turn['status']
 end
-
-game_json = RestClient.get("#{host}/games/#{game['id']}",).body
-puts game_json
-puts "\n\n"
-
-completed_game = JSON.parse(game_json);
-puts "COMPLETED GAME WITH:"
-puts "Total delay: #{completed_game['delay_turns']} turns"
-puts "Total cost: $#{completed_game['cost']}"
