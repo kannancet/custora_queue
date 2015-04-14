@@ -1,5 +1,10 @@
 
 =begin
+	This class is used to write common methods.
+=end
+  class Common
+
+=begin
 	This function is used to generate object.
 =end
 	  def object_generator(json_info, this)
@@ -21,9 +26,10 @@
 	This function is used to print the game text after completion.
 =end
 		def print_game_text(game)
-			@game = @game.reload
 			puts "COMPLETED GAME WITH:"
 			puts "Total delay: #{game[11]} turns"
 			puts "Total cost: $#{game[1]}"
 			puts "Total and Maximum Score: $#{game[7]}"
 		end
+
+  end

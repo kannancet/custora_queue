@@ -8,6 +8,7 @@ module CustoraQueue
 =end
   class GameReactor
 
+    include Common
     attr_accessor :game, :machine
 
 =begin
