@@ -28,16 +28,19 @@ module CustoraQueue
 				jobs_found = @turn.instance_variable_get("@jobs").size
 				print_turn_text(jobs_found)
 
+       if (@turn.instance_variable_get("current_turn") % 25) == 0
+       	@machine.destroy
+       end
+
 			  #@turn.assign_jobs2
 			  
 			  @turn.assign_jobs(machine)		
-			     #@game = @game.reload
-			     game_id = @game.instance_variable_get("@id")
-			     p json_info = RestClient.get("#{HOST}/games/#{game_id}").body		
-			     	  
 			  @turn.next_turn
 			end
 
+			#@game = @game.reload
+			game_id = @game.instance_variable_get("@id")
+			p json_info = RestClient.get("#{HOST}/games/#{game_id}").body
 		end  	
 
   end
