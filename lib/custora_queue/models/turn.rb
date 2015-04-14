@@ -37,19 +37,4 @@
 	    ).body
     end
 
-	  def assign_jobs2
-	  	jobs = instance_variable_get("@jobs")
-	  	game_id = instance_variable_get("@game").instance_variable_get("@id")
-	  	jobs.each do |job|
-	  		m = Machine.new(instance_variable_get("@game"))
-	  		mid = m.instance_variable_get("@id")
-		    RestClient.post(
-		      "#{HOST}/games/#{game_id}/machines/#{mid}/job_assignments",
-		      job_ids: JSON.dump([job["id"]])
-		    ).body
-		    m.destroy
-	  	end
-
-    end
-
 	end
