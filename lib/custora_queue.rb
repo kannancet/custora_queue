@@ -7,8 +7,10 @@ require_relative "custora_queue/models/turn"
 
 require 'json'
 require 'rest-client'
-require 'dish/ext'
 
+=begin
+	This is the base module.
+=end
 module CustoraQueue
   
   @game_reactor = GameReactor.new
