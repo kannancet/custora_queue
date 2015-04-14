@@ -31,20 +31,14 @@ module CustoraQueue
 			  #@turn.assign_jobs2
 			  
 			  @turn.assign_jobs(machine)		
+			     #@game = @game.reload
+			     game_id = @game.instance_variable_get("@id")
+			     p json_info = RestClient.get("#{HOST}/games/#{game_id}").body		
+			     	  
 			  @turn.next_turn
 			end
 
-			p @game = @game.reload
 		end  	
-
-=begin
-	This function is used to run the gane reactor.
-=end
-		def print_turn_text(jobs_found)
-		  turn = {}
-		  @turn.instance_variables.each {|var| turn[var.to_s.delete("@")] = @turn.instance_variable_get(var) }
-		  puts "On turn #{turn['current_turn']}, got #{turn['jobs'].count} jobs, having completed #{turn['jobs_completed']} of #{jobs_found} with #{turn['jobs_running']} jobs running, #{turn['jobs_queued']} jobs queued, and #{turn['machines_running']} machines running"		
-		end
 
   end
 

@@ -17,7 +17,7 @@
 =end
 		def reload
 			game_id = self.instance_variable_get("@id")
-			json_info = RestClient.get("#{host}/games/#{game_id}").body
+			json_info = RestClient.get("#{HOST}/games/#{game_id}").body
 			object_generator(json_info, self)
 		end
 
