@@ -25,5 +25,5 @@
 			puts "COMPLETED GAME WITH:"
 			puts "Total delay: #{game[11]} turns"
 			puts "Total cost: $#{game[1]}"
-			puts "Total Score: $#{game[7]}"
+			puts "Total and Maximum Score: $#{game[7]}"
 		end

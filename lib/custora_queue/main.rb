@@ -30,6 +30,7 @@ module CustoraQueue
 
        if (@turn.instance_variable_get("@current_turn") % 25) == 0
         @machine.destroy
+        @machine = Machine.new(game)
        end
         
         @turn.assign_jobs(machine)    
