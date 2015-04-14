@@ -7,7 +7,7 @@ module CustoraQueue
   The class to deal with game processing.
 =end
   class GameReactor
-
+    
     include Common
     attr_accessor :game, :machine
 

@@ -2,7 +2,8 @@
 =begin
 	This class is used to write common methods.
 =end
-  class Common
+
+  module Common
 
 =begin
 	This function is used to generate object.

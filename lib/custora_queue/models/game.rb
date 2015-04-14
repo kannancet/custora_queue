@@ -2,8 +2,10 @@
 	This class represnets Game Model.
 =end
 	class Game
-		include CustoraQueue
 
+		include CustoraQueue
+		include Common
+		
 =begin
 	This method is used create a game object.
 =end

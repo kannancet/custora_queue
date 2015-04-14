@@ -2,7 +2,9 @@
 	This class represnets Machine Model.
 =end
 	class Machine
+		
 		include CustoraQueue
+		include Common
 		attr_accessor :game
 
 =begin

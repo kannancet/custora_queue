@@ -2,7 +2,9 @@
 	This class represnets Turn Model.
 =end
 	class Turn
+		
 		include CustoraQueue
+		include Common
 		attr_accessor :game
 
 =begin
