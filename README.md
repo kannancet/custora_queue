@@ -6,7 +6,7 @@ Clone the repository:
 	$ git clone https://github.com/kannancet/custora_queue.git
 
 
-Go to the folder and then execute:
+Run the bundle:
 
     $ cd custora_queue 
     $ bundle install
