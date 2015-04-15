@@ -1,27 +1,23 @@
 
-# CustoraQueue
+## CustoraQueue Installation
 
-TODO: Write a gem description
+Clone the repository:
 
-## Installation
+	$ git clone https://github.com/kannancet/custora_queue.git
 
-Add this line to your application's Gemfile:
 
-```ruby
-gem 'custora_queue'
-```
+Go to the folder and then execute:
 
-And then execute:
+    $ cd custora_queue 
+    $ bundle install
 
-    $ bundle
+Run the spec:
 
-Or install it yourself as:
+    $ rake spec
 
-    $ gem install custora_queue
+Run the program:
 
-## Usage
-
-TODO: Write usage instructions here
+    $ ruby lib/custora_queue.rb
 
 ## Contributing
 
